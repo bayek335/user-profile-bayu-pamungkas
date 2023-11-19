@@ -20,6 +20,9 @@ func NewUser(model model.UserModel) *userService {
 
 func (s *userService) CreateUser(userReq *app.UserRegister) (*app.User, error, int) {
 	var httpCode int
+
+	// Parsing user request struct format to user struct format
+	// before send to model in order to insert to database
 	user := &app.User{
 		Username: userReq.Username,
 		Email:    userReq.Email,
