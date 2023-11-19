@@ -29,6 +29,15 @@ func (con *authController) Register(c *gin.Context) {
 		return
 	}
 
+	// Hash password using bcrypt
+	hashedPassword, err := helpers.HashPassoword(userReq.Password)
+	if err != nil {
+		response := helpers.UserResponseFail(err)
+		c.JSON(http.StatusInternalServerError, response)
+		return
+	}
+	userReq.Password = hashedPassword
+
 	// Call the service of user
 	user, err, httpCode := con.service.CreateUser(&userReq)
 
