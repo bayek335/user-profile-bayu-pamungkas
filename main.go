@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/bayek335/task-5-pbi-btpns-bayu-pamungkas/database"
+	"github.com/bayek335/task-5-pbi-btpns-bayu-pamungkas/router"
 	"github.com/joho/godotenv"
 )
 
@@ -14,6 +15,8 @@ func main() {
 		panic("Error while trying to load env")
 	}
 
-	database.DBConnection()
+	db := database.DBConnection()
+
+	router.Routes(db)
 
 }

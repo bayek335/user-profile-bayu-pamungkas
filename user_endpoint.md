@@ -21,8 +21,7 @@
 
     {
         "success" : false,
-        "message" :  "Email already exists",
-        "error_code" : 1306,
+        "message" :  "Email already exists"
     }
 
 ```
@@ -45,8 +44,7 @@
 
     {
         "success" : false,
-        "message" :  "Email or  password incorrect",
-        "error_code" : 1306,
+        "message" :  "Email or  password incorrect"
     }
 
 ```
@@ -71,8 +69,7 @@
 
     {
         "success" : false,
-        "message" :  "User does not exist",
-        "error_code" : 1306,
+        "message" :  "User does not exist"
     }
 
 ```
@@ -97,8 +94,7 @@
 
     {
         "success" : false,
-        "message" :  "Internal server error",
-        "error_code" : 1306,
+        "message" :  "Internal server error"
     }
 
 ```
