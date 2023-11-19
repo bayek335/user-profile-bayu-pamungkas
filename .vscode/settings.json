@@ -1,0 +1,9 @@
+{
+    "editor.fontFamily": "Inconsolata, 'Courier New', monospace",
+    "editor.fontSize": 14,
+    "editor.fontWeight": 550,
+    "workbench.colorTheme": "Dracula Soft",
+    "terminal.integrated.fontFamily": "monaco",
+    "terminal.integrated.fontSize": 12,
+    "terminal.integrated.letterSpacing": 0,
+}
