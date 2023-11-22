@@ -8,6 +8,7 @@ type User struct {
 	Username  string    `db:"username"`
 	Email     string    `db:"email" gorm:"unique"`
 	Password  string    `db:"password"`
+	IsActive  bool      `db:"is_active"`
 	CreatedAt time.Time `db:"created_at"`
 	UpdatedAt time.Time `db:"updated_at"`
 }
@@ -17,12 +18,13 @@ type UserRegister struct {
 	Username string `json:"username" binding:"required"`
 	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required,min=6"`
+	IsActive bool   `db:"is_active"`
 }
 
 // Struct that bind the user request  while login
 type UserLogin struct {
-	Username string `json:"username" binding:"required"`
 	Email    string `json:"email" binding:"required"`
+	Password string `json:"password" binding:"required,min=6"`
 }
 
 // Struct that formating the json response success
@@ -33,11 +35,20 @@ type UserResponseSuccess struct {
 		ID       int    `json:"id"`
 		Username string `json:"username"`
 		Email    string `json:"email"`
-	}
+	} `json:"data"`
 }
 
 // Struct that formating the json response fail
 type UserResponseFail struct {
-	Success bool
-	Message string
+	Success bool   `json:"succes"`
+	Message string `json:"message"`
 }
+
+// // Struct that formating the json response fail
+// type LoginResponse struct {
+// 	Success bool   `json:"succes"`
+// 	Message string `json:"message"`
+// 	Data    struct {
+// 		Token string `json:"token"`
+// 	} `json:"data"`
+// }
