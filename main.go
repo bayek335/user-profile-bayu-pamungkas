@@ -17,7 +17,7 @@ func init() {
 
 }
 func main() {
-	// daabse connection
+	// database connection
 	db := database.DBConnection()
 
 	// router

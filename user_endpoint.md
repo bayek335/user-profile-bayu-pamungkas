@@ -32,10 +32,7 @@
 
     {
         "status" : "success",
-        "message" : "Login sucessfully",
-        "data" : {
-            "token" : "@token"
-        }
+        "message" : "User has been loged in"
     }
 
 ```
@@ -44,7 +41,7 @@
 
     {
         "success" : false,
-        "message" :  "Email or  password incorrect"
+        "message" :  "Wrong password or email!"
     }
 
 ```
