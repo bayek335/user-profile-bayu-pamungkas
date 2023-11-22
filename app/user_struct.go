@@ -43,12 +43,3 @@ type UserResponseFail struct {
 	Success bool   `json:"succes"`
 	Message string `json:"message"`
 }
-
-// // Struct that formating the json response fail
-// type LoginResponse struct {
-// 	Success bool   `json:"succes"`
-// 	Message string `json:"message"`
-// 	Data    struct {
-// 		Token string `json:"token"`
-// 	} `json:"data"`
-// }
