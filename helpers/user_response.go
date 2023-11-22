@@ -26,3 +26,12 @@ func UserResponseSuccess(user *app.User, mes string) *app.UserResponseSuccess {
 	return userResSuc
 
 }
+
+// func UserLoginResponse(token string) *app.LoginResponse {
+// 	loginRes := &app.LoginResponse{
+// 		Success: true,
+// 		Message: "sucess",
+// 	}
+// 	loginRes.Data.Token = token
+// 	return loginRes
+// }

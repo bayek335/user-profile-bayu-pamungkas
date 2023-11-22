@@ -6,15 +6,15 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func HashPassoword(password string) (string, error) {
+func Hash(str string) (string, error) {
 
-	hashPass, err := bcrypt.GenerateFromPassword([]byte(password), 5)
+	hashPass, err := bcrypt.GenerateFromPassword([]byte(str), 10)
 
 	if err != nil {
 		err = errors.New("Internal server error!")
-		return password, err
+		return str, err
 	}
 
-	password = string(hashPass)
-	return password, nil
+	str = string(hashPass)
+	return str, nil
 }
