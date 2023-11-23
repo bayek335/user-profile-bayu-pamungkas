@@ -17,8 +17,10 @@ import (
 func Routes(db *gorm.DB) {
 	// Initiate router v1
 	router := gin.Default()
+	// Initiate the static folder
+	router.Static("/public", "./public")
 	v1 := router.Group("/v1")
-
+	router.MaxMultipartMemory = 8 << 20
 	// Create cookie
 	store := cookie.NewStore([]byte("secret"))
 	v1.Use(sessions.Sessions("mysession", store))
@@ -53,8 +55,9 @@ func Routes(db *gorm.DB) {
 	photosRouter := v1.Group("/photos")
 	photosRouter.Use(middleware.ChekLogin())
 
+	photosRouter.POST("", photo.CreatePhoto)
 	photosRouter.POST("/", photo.CreatePhoto)
-	photosRouter.GET("/", photo.GetPhoto)
+	photosRouter.GET("/", photo.GetPhotos)
 	photosRouter.PUT("/:id", photo.UpdatePhoto)
 	photosRouter.DELETE("/:id", photo.DeletePhoto)
 
