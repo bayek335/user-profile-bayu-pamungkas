@@ -7,9 +7,9 @@ import (
 
 type PhotoModel interface {
 	CreatePhoto(photo *app.Photos) (*app.Photos, error)
-	GetPhoto(ID int) (*app.Photos, error)
-	UpdatePhoto(photo *app.Photos, ID int) (*app.Photos, error)
-	DeletePhoto(ID int) (*app.Photos, error)
+	GetPhotos(ID int) ([]*app.Photos, error)
+	UpdatePhoto(photo *app.Photos, ID, user_ID int) (*app.Photos, string, error)
+	DeletePhoto(ID, user_ID int) (*app.Photos, string, error)
 }
 
 type photoModel struct {
@@ -21,16 +21,39 @@ func NewPhoto(db *gorm.DB) *photoModel {
 }
 
 func (m *photoModel) CreatePhoto(photo *app.Photos) (*app.Photos, error) {
-	return photo, nil
+
+	err := m.db.Create(&photo).Error
+	return photo, err
 }
-func (m *photoModel) GetPhoto(ID int) (*app.Photos, error) {
-	var photo *app.Photos
-	return photo, nil
+func (m *photoModel) GetPhotos(ID int) ([]*app.Photos, error) {
+	var arrPhoto []*app.Photos
+	err := m.db.Find(&arrPhoto).Error
+	return arrPhoto, err
 }
-func (m *photoModel) UpdatePhoto(photo *app.Photos, ID int) (*app.Photos, error) {
-	return photo, nil
+func (m *photoModel) UpdatePhoto(photo *app.Photos, ID, user_ID int) (*app.Photos, string, error) {
+	var Photo *app.Photos
+	err := m.db.Where("id =? AND user_id=?", ID, user_ID).First(&Photo).Error
+	if err != nil {
+		return photo, "", err
+	}
+	oldFileUrl := Photo.PhotoUrl
+	err = m.db.Where("id = ?", ID).Updates(&photo).Error
+
+	photo.ID = ID
+	photo.UserId = Photo.UserId
+
+	return photo, oldFileUrl, err
 }
-func (m *photoModel) DeletePhoto(ID int) (*app.Photos, error) {
-	var photo *app.Photos
-	return photo, nil
+func (m *photoModel) DeletePhoto(ID, user_ID int) (*app.Photos, string, error) {
+	var Photo *app.Photos
+	result := m.db.Where("id =? AND user_id=?", ID, user_ID)
+	if err := result.First(&Photo).Error; err != nil {
+		return Photo, "", err
+	}
+	fileUrl := Photo.PhotoUrl
+	err := result.Delete(&Photo).Error
+	if err != nil {
+		return Photo, "", err
+	}
+	return Photo, fileUrl, nil
 }
