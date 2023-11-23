@@ -7,9 +7,9 @@ import (
 
 type PhotoService interface {
 	CreatePhoto(photo *app.Photos) (*app.Photos, error)
-	GetPhoto(ID int) (*app.Photos, error)
-	UpdatePhoto(photo *app.Photos, ID int) (*app.Photos, error)
-	DeletePhoto(ID int) (*app.Photos, error)
+	GetPhotos(ID int) ([]*app.Photos, error)
+	UpdatePhoto(photo *app.Photos, ID, user_ID int) (*app.Photos, string, error)
+	DeletePhoto(ID, user_ID int) (*app.Photos, string, error)
 }
 
 type photoService struct {
@@ -21,35 +21,33 @@ func NewPhoto(model model.PhotoModel) *photoService {
 }
 
 func (s *photoService) CreatePhoto(photo *app.Photos) (*app.Photos, error) {
-	var Photo *app.Photos
-	photo, err := s.model.CreatePhoto(Photo)
+	photo, err := s.model.CreatePhoto(photo)
 	if err != nil {
 		return photo, err
 	}
 	return photo, nil
 }
 
-func (s *photoService) GetPhoto(ID int) (*app.Photos, error) {
-	photo, err := s.model.GetPhoto(ID)
+func (s *photoService) GetPhotos(ID int) ([]*app.Photos, error) {
+	photo, err := s.model.GetPhotos(ID)
 	if err != nil {
 		return photo, err
 	}
 	return photo, nil
 }
 
-func (s *photoService) UpdatePhoto(photo *app.Photos, ID int) (*app.Photos, error) {
-	var Photo *app.Photos
-	photo, err := s.model.UpdatePhoto(Photo, ID)
+func (s *photoService) UpdatePhoto(photo *app.Photos, ID, user_ID int) (*app.Photos, string, error) {
+	photo, oldFileUrl, err := s.model.UpdatePhoto(photo, ID, user_ID)
 	if err != nil {
-		return photo, err
+		return photo, oldFileUrl, err
 	}
-	return photo, nil
+	return photo, oldFileUrl, nil
 }
 
-func (s *photoService) DeletePhoto(ID int) (*app.Photos, error) {
-	photo, err := s.model.DeletePhoto(ID)
+func (s *photoService) DeletePhoto(ID, user_ID int) (*app.Photos, string, error) {
+	photo, fileUrl, err := s.model.DeletePhoto(ID, user_ID)
 	if err != nil {
-		return photo, err
+		return photo, "", err
 	}
-	return photo, nil
+	return photo, fileUrl, nil
 }
